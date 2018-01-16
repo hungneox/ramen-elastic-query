@@ -2,44 +2,84 @@
 
 namespace Neox\Ramen\Elastic\Query;
 
+use Nord\Lumen\Elasticsearch\Contracts\ElasticsearchServiceContract;
+
 class Builder
 {
-
-    protected $columns = ['*'];
-
     /**
      * The current query value bindings.
      *
      * @var array
      */
-    public $bindings = [
-        'select' => [],
-        'join'   => [],
-        'where'  => [],
-        'order'  => [],
+    public $query = [
+        'use'     => [], // database. collection
+        'columns' => ['*'], // select
+        'from'    => [], // table, type
+        'where'   => [],
+        'order'   => [],
+        'offset'  => [],
+        'delete'  => []
     ];
 
     protected $data;
 
+    protected $search;
+
+    /**
+     * Builder constructor.
+     *
+     * @param ElasticsearchServiceContract $service
+     */
+    public function __construct(ElasticsearchServiceContract $service)
+    {
+        $this->search = $service;
+    }
+
     public function select($columns = ['*'])
     {
-        $this->columns = is_array($columns) ? $columns : func_get_args();
+        $this->query['columns'] = is_array($columns) ? $columns : func_get_args();
 
         return $this;
     }
 
-    public function join()
+    //public function join()
+    //{
+    //    return $this;
+    //}
+
+    public function from(string $table)
     {
+        $this->query['from'] = $table;
+
         return $this;
     }
 
-    public function where()
+    public function where($column, $operator = null, $value = null)
     {
+        $this->query['wheres'][] = [
+            'field'    => $column,
+            'operator' => $operator,
+            'value'    => $value,
+        ];
+
         return $this;
     }
 
-    public function limit()
+    public function orWhere($column, $operator = null, $value = null)
     {
+        $this->query['orWheres'][] = [
+            'field'    => $column,
+            'operator' => $operator,
+            'value'    => $value,
+        ];
+
+        return $this;
+    }
+
+    public function limit($size)
+    {
+        $this->query['limit'] = $size;
+
         return $this;
     }
 
@@ -48,8 +88,10 @@ class Builder
         return $this->offset($value);
     }
 
-    public function offset($value)
+    public function offset($offset)
     {
+        $this->query['offset'] = $offset;
+
         return $this;
     }
 
@@ -65,7 +107,7 @@ class Builder
 
     public function delete($id)
     {
-
+        $this->query['delete'][] = $id;
     }
 
     public function count()
@@ -75,7 +117,7 @@ class Builder
 
     public function deleteRaw(array $query)
     {
-
+        $this->query['deleteRaw'] = $query;
     }
 
     public function get()
