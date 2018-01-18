@@ -4,34 +4,26 @@ namespace Neox\Ramen\Elastic;
 
 use Laravel\Lumen\Application;
 use Illuminate\Support\ServiceProvider;
+use Neox\Ramen\Elastic\Query\Processor;
 use Nord\Lumen\Elasticsearch\Contracts\ElasticsearchServiceContract;
-use Nord\Lumen\Elasticsearch\ElasticsearchServiceProvider;
 
 class ElasticServiceProvider extends ServiceProvider
 {
-    const CONFIG_KEY = 'elasticsearch';
-
     /**
      * @inheritdoc
      */
     public function register()
     {
-        $this->app->configure(self::CONFIG_KEY);
-        $this->registerBindings();
-    }
-    /**
-     * Register bindings.
-     */
-    protected function registerBindings()
-    {
         if (!$this->app->has(ElasticsearchServiceContract::class)) {
-            $this->app->register(
-                ElasticsearchServiceProvider::class
-            );
+            $this->app->register(\Nord\Lumen\Elasticsearch\ElasticsearchServiceProvider::class);
         }
 
         $this->app->singleton(ElasticService::class, function (Application $app) {
-            return new ElasticService($app->make(ElasticsearchServiceProvider::class));
+            return new ElasticService($app->make(ElasticsearchServiceContract::class));
+        });
+
+        $this->app->singleton(Processor::class, function (Application $app) {
+            return new Processor($app->make(ElasticsearchServiceContract::class));
         });
     }
 }

@@ -16,6 +16,12 @@ $result = Elastic::select('id', 'description')
 			->get();
 ```
 
+```php
+$result = $builder
+	->use('content')
+	->from('article')
+	->find('TIYKtQX', '_id', ['id', 'title', 'description']);
+```
 
 ```php
 $result = Elastic::from('person') // select * by default
