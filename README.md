@@ -1,6 +1,6 @@
 # Ramen Elastic Query
 
-Fluent Pseudo-SQL query builder for Elasticsearch
+Fluent Pseudo-SQL query builder for Elasticsearch built on top of [Lumen Elasticsearch](https://github.com/digiaonline/lumen-elasticsearch)
 
 
 # Installation
