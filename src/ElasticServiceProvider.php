@@ -4,7 +4,9 @@ namespace Neox\Ramen\Elastic;
 
 use Laravel\Lumen\Application;
 use Illuminate\Support\ServiceProvider;
+use Neox\Ramen\Elastic\Query\Builder;
 use Neox\Ramen\Elastic\Query\Processor;
+use Neox\Ramen\Elastic\Query\Query;
 use Nord\Lumen\Elasticsearch\Contracts\ElasticsearchServiceContract;
 
 class ElasticServiceProvider extends ServiceProvider
@@ -24,6 +26,10 @@ class ElasticServiceProvider extends ServiceProvider
 
         $this->app->singleton(Processor::class, function (Application $app) {
             return new Processor($app->make(ElasticsearchServiceContract::class));
+        });
+
+        $this->app->bind('es', function() {
+            return new Builder(new Query());
         });
     }
 }
