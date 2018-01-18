@@ -5,10 +5,10 @@ namespace Neox\Ramen\Elastic;
 use Nord\Lumen\Elasticsearch\Contracts\ElasticsearchServiceContract;
 
 /**
- * Class ElasticService
+ * Class ElasticQueryService
  * @package Neox\Ramen\Elastic
  */
-class ElasticService
+class ElasticQueryService
 {
     protected $client;
 

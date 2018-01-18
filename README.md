@@ -8,7 +8,7 @@ Fluent Pseudo-SQL query builder for Elasticsearch built on top of [Lumen Elastic
 Add the following line to bootstrap/app.php:
 
 ```php
-$app->register(Neox\Ramen\Elastic\ElasticServiceProvider::class);
+$app->register(Neox\Ramen\Elastic\ElasticQueryServiceProvider::class);
 ```
 
 # Usage

@@ -9,7 +9,7 @@ use Neox\Ramen\Elastic\Query\Processor;
 use Neox\Ramen\Elastic\Query\Query;
 use Nord\Lumen\Elasticsearch\Contracts\ElasticsearchServiceContract;
 
-class ElasticServiceProvider extends ServiceProvider
+class ElasticQueryServiceProvider extends ServiceProvider
 {
     /**
      * @inheritdoc
@@ -20,8 +20,8 @@ class ElasticServiceProvider extends ServiceProvider
             $this->app->register(\Nord\Lumen\Elasticsearch\ElasticsearchServiceProvider::class);
         }
 
-        $this->app->singleton(ElasticService::class, function (Application $app) {
-            return new ElasticService($app->make(ElasticsearchServiceContract::class));
+        $this->app->singleton(ElasticQueryService::class, function (Application $app) {
+            return new ElasticQueryService($app->make(ElasticsearchServiceContract::class));
         });
 
         $this->app->singleton(Processor::class, function (Application $app) {
