@@ -1,4 +1,6 @@
-# Ramen Elastic Query
+# Ramen Elastic Query (In development)
+
+[![Build Status](https://travis-ci.org/hungneox/ramen-elastic-query.svg?branch=master)](https://travis-ci.org/hungneox/ramen-elastic-query)
 
 Fluent Pseudo-SQL query builder for Elasticsearch built on top of [Lumen Elasticsearch](https://github.com/digiaonline/lumen-elasticsearch)
 
