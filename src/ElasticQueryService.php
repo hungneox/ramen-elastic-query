@@ -3,7 +3,9 @@
 namespace Neox\Ramen\Elastic;
 
 use Neox\Ramen\Elastic\Query\Query;
+use Neox\Ramen\Elastic\Query\WhereClause;
 use Nord\Lumen\Elasticsearch\Contracts\ElasticsearchServiceContract;
+use Nord\Lumen\Elasticsearch\Search\Query\Compound\BoolQuery;
 use Nord\Lumen\Elasticsearch\Search\Query\QueryDSL;
 
 /**
@@ -56,7 +58,7 @@ class ElasticQueryService
                    ->setType($query->getType())
                    ->setSource($query->getFields())
                    ->setSize($query->getSize())
-                   ->setPage(1);
+                   ->setPage($query->getPage());
     }
 
     /**
@@ -117,13 +119,9 @@ class ElasticQueryService
 
         $esQuery = $queryBuilder->createBoolQuery();
 
-        foreach($query->getMustClauses() as $must) {
-            $esQuery->addMust($this->createTermQuery($must));
-        }
+        $this->createClauses($esQuery, $query->getMustClauses(), 'must');
 
-        foreach($query->getShouldClauses() as $should) {
-            $esQuery->addShould($this->createTermQuery($should));
-        }
+        $this->createClauses($esQuery, $query->getShouldClauses(), 'should');
 
         $search = $this->createSearch($query)->setQuery($esQuery);
 
@@ -132,16 +130,48 @@ class ElasticQueryService
     }
 
     /**
+     * @param BoolQuery $query
+     * @param array     $clauses
+     * @param string    $type
+     */
+    protected function createClauses(BoolQuery &$query, array $clauses, string $type)
+    {
+        $func = ($type == 'should') ? 'addShould' : 'addMust';
+
+        foreach($clauses as $clause) {
+            if ($clause->getOperator() === '=') {
+                $query->$func($this->createTermQuery($clause));
+            }
+
+            if ($clause->getOperator() === 'like') {
+                $query->$func($this->createMatchQuery($clause));
+            }
+        }
+    }
+
+    /**
      * @param array $must
      *
      * @return QueryDSL
      */
-    protected function createTermQuery(array $must): QueryDSL
+    protected function createTermQuery(WhereClause $clause): QueryDSL
     {
         return $this->client->createQueryBuilder()
             ->createTermQuery()
-            ->setField($must['field'])
-            ->setValue($must['value']);
+            ->setField($clause->getField())
+            ->setValue($clause->getValue());
     }
 
+    /**
+     * @param WhereClause $clause
+     *
+     * @return QueryDSL
+     */
+    protected function createMatchQuery(WhereClause $clause)
+    {
+        return $this->client->createQueryBuilder()
+            ->createMatchQuery()
+            ->setField($clause->getField())
+            ->setValue($clause->getValue());
+    }
 }

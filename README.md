@@ -46,3 +46,9 @@ $result = $builder->from('person') // select * by default
 			->orderBy('age', 'desc')
 			->get();
 ```
+
+### Deletion
+
+```php
+ES::use('content')->from('article')->delete($id);
+```

@@ -62,13 +62,9 @@ class Builder
      *
      * @return $this
      */
-    public function where($column, $operator = null, $value = null)
+    public function where($column, $operator = '=', $value = '')
     {
-        $this->query->addMust([
-            'field'    => $column,
-            'operator' => $operator,
-            'value'    => $value,
-        ])->setAction(Query::ACTION_BOOLEAN_QUERY);
+        $this->query->addMust(new WhereClause($column, $operator, $value))->setAction(Query::ACTION_BOOLEAN_QUERY);
 
         return $this;
     }
@@ -82,11 +78,7 @@ class Builder
      */
     public function orWhere($column, $operator = null, $value = null)
     {
-        $this->query->addShould([
-            'field'    => $column,
-            'operator' => $operator,
-            'value'    => $value,
-        ])->setAction(Query::ACTION_BOOLEAN_QUERY);
+        $this->query->addShould(new WhereClause($column, $operator, $value))->setAction(Query::ACTION_BOOLEAN_QUERY);
 
         return $this;
     }
@@ -156,6 +148,8 @@ class Builder
         $this->query->setId($id)
                     ->setPrimaryKey($column)
                     ->setAction(Query::ACTION_DELETE_BY_KEY);
+
+        return $this->execute();
     }
 
     public function count()

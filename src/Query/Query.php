@@ -29,6 +29,8 @@ class Query
 
     protected $order;
 
+    protected $page;
+
     protected $from;
 
     protected $size;
@@ -124,7 +126,7 @@ class Query
     }
 
     /**
-     * @return mixed
+     * @return WhereClause[]
      */
     public function getMustClauses()
     {
@@ -142,7 +144,7 @@ class Query
     }
 
     /**
-     * @return mixed
+     * @return WhereClause[]
      */
     public function getShouldClauses()
     {
@@ -173,6 +175,27 @@ class Query
     public function setOrder($order)
     {
         $this->order = $order;
+
+        return $this;
+    }
+
+
+    /**
+     * @return mixed
+     */
+    public function getPage()
+    {
+        return $this->page;
+    }
+
+    /**
+     * @param mixed $page
+     *
+     * @return Query
+     */
+    public function setPage($page)
+    {
+        $this->page = $page;
 
         return $this;
     }
