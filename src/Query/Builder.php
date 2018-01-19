@@ -8,26 +8,9 @@ class Builder
 {
 
     /**
-     * The current query value bindings.
-     *
-     * @var array
+     * @var Query
      */
-    //public $query = [
-    //    'use'     => [],    // database. collection
-    //    'columns' => ['*'], // select
-    //    'from'    => [],    // table, type
-    //    'where'   => [],    // must
-    //    'order'   => [],    // should
-    //    'offset'  => [],    // from
-    //    'limit'   => [],    // size
-    //    'delete'  => [],
-    //];
-
     protected $query;
-
-    protected $data;
-
-    protected $search;
 
     public function __construct(Query $query)
     {
@@ -55,15 +38,10 @@ class Builder
     {
         $columns = is_array($columns) ? $columns : func_get_args();
 
-        $this->query->setFields($columns)->setAction(Query::ACTION_GENERAL_SELECT);
+        $this->query->setFields($columns);
 
         return $this;
     }
-
-    //public function join()
-    //{
-    //    return $this;
-    //}
 
     /**
      * @param string $table
@@ -90,7 +68,7 @@ class Builder
             'field'    => $column,
             'operator' => $operator,
             'value'    => $value,
-        ]);
+        ])->setAction(Query::ACTION_BOOLEAN_QUERY);
 
         return $this;
     }
@@ -108,7 +86,7 @@ class Builder
             'field'    => $column,
             'operator' => $operator,
             'value'    => $value,
-        ]);
+        ])->setAction(Query::ACTION_BOOLEAN_QUERY);
 
         return $this;
     }
@@ -200,6 +178,10 @@ class Builder
 
     public function get()
     {
+        if ($this->query->getAction() === null) {
+            $this->query->setAction(Query::ACTION_MATCH_ALL);
+        }
+
         return $this->execute();
     }
 }

@@ -6,7 +6,7 @@ class Query
 {
 
     public const ACTION_MATCH_BY_KEY   = 'match';
-    public const ACTION_GENERAL_SELECT = 'select';
+    public const ACTION_MATCH_ALL      = 'match_all';
     public const ACTION_DELETE_BY_KEY  = 'delete';
     public const ACTION_BOOLEAN_QUERY  = 'boolean';
     public const ACTION_FULLTEXT_QUERY = 'fulltext';
@@ -23,9 +23,9 @@ class Query
 
     protected $type;
 
-    protected $musts;
+    protected $musts = [];
 
-    protected $shoulds;
+    protected $shoulds = [];
 
     protected $order;
 
@@ -136,7 +136,7 @@ class Query
      */
     public function addMust($must)
     {
-        $this->musts = $must;
+        $this->musts[] = $must;
 
         return $this;
     }

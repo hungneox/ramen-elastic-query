@@ -34,7 +34,7 @@ $result = ES::use('content')
 ```php
 $result = $builder->select('id', 'description')
 			->from('recipe')
-			->where('id', $id)
+			->where('_id', '=', $id)
 			->get();
 ```
 
