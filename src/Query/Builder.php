@@ -2,6 +2,8 @@
 
 namespace Neox\Ramen\Elastic\Query;
 
+use Neox\Ramen\Elastic\ElasticQueryService;
+
 class Builder
 {
 
@@ -190,10 +192,10 @@ class Builder
 
     public function execute()
     {
-        /** @var Processor $processor */
-        $processor = app(Processor::class);
+        /** @var ElasticQueryService $processor */
+        $service = app(ElasticQueryService::class);
 
-        return $processor->execute($this->query);
+        return $service->execute($this->query);
     }
 
     public function get()
