@@ -7,6 +7,12 @@ Fluent Pseudo-SQL query builder for Elasticsearch built on top of [Lumen Elastic
 
 # Installation
 
+Run the following command to install the package through Composer:
+
+```
+composer require hungneox/ramen-elastic-query
+```
+
 Add the following line to bootstrap/app.php:
 
 ```php
