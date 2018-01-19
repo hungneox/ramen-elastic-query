@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "a9cfa55d0f067ca2f36ddefe073d5a1a",
+    "content-hash": "9b63efeb91a632339b658a2e65ea9506",
     "packages": [
         {
             "name": "doctrine/inflector",
@@ -628,16 +628,16 @@
         },
         {
             "name": "nordsoftware/lumen-elasticsearch",
-            "version": "2.3.5",
+            "version": "2.3.6",
             "source": {
                 "type": "git",
                 "url": "https://github.com/digiaonline/lumen-elasticsearch.git",
-                "reference": "4412c3857e92fc3aa2ca598125860c56555c5397"
+                "reference": "e2951b5d0e2ffa7526f63c64dd6fb8317cd3b2b4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/digiaonline/lumen-elasticsearch/zipball/4412c3857e92fc3aa2ca598125860c56555c5397",
-                "reference": "4412c3857e92fc3aa2ca598125860c56555c5397",
+                "url": "https://api.github.com/repos/digiaonline/lumen-elasticsearch/zipball/e2951b5d0e2ffa7526f63c64dd6fb8317cd3b2b4",
+                "reference": "e2951b5d0e2ffa7526f63c64dd6fb8317cd3b2b4",
                 "shasum": ""
             },
             "require": {
@@ -677,7 +677,7 @@
                 "laravel",
                 "lumen"
             ],
-            "time": "2017-12-07T15:10:47+00:00"
+            "time": "2018-01-19T08:45:37+00:00"
         },
         {
             "name": "psr/container",

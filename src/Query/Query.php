@@ -5,11 +5,11 @@ namespace Neox\Ramen\Elastic\Query;
 class Query
 {
 
-    public const ACTION_MATCH_BY_KEY   = 'match';
-    public const ACTION_MATCH_ALL      = 'match_all';
-    public const ACTION_DELETE_BY_KEY  = 'delete';
-    public const ACTION_BOOLEAN_QUERY  = 'boolean';
-    public const ACTION_FULLTEXT_QUERY = 'fulltext';
+    const ACTION_MATCH_BY_KEY   = 'match';
+    const ACTION_MATCH_ALL      = 'match_all';
+    const ACTION_DELETE_BY_KEY  = 'delete';
+    const ACTION_BOOLEAN_QUERY  = 'boolean';
+    const ACTION_FULLTEXT_QUERY = 'fulltext';
 
     protected $action;
 
@@ -84,9 +84,11 @@ class Query
     /**
      * @param mixed $collection
      */
-    public function setCollection($collection): void
+    public function setCollection($collection)
     {
         $this->collection = $collection;
+        
+        return $this;
     }
 
     /**

@@ -23,8 +23,8 @@ class ElasticQueryServiceProvider extends ServiceProvider
             return new ElasticQueryService($app->make(ElasticsearchServiceContract::class));
         });
 
-        $this->app->bind('es', function() {
-            return new Builder(new Query());
+        $this->app->bind('es', function(Application $app)  {
+            return new Builder($app->make(ElasticQueryService::class), new Query());
         });
     }
 }

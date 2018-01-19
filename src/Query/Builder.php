@@ -12,9 +12,23 @@ class Builder
      */
     protected $query;
 
-    public function __construct(Query $query)
+    /**
+     * @var ElasticQueryService
+     */
+    protected $service;
+
+    public function __construct(ElasticQueryService $service, Query $query)
     {
-        $this->query = $query;
+        $this->query    = $query;
+        $this->service  = $service;
+    }
+
+    /**
+     * @return Query
+     */
+    public function getQuery()
+    {
+        return $this->query;
     }
 
     /**
@@ -164,10 +178,7 @@ class Builder
 
     public function execute()
     {
-        /** @var ElasticQueryService $processor */
-        $service = app(ElasticQueryService::class);
-
-        return $service->execute($this->query);
+        return $this->service->execute($this->query);
     }
 
     public function get()
