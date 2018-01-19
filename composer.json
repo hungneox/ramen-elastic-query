@@ -1,5 +1,5 @@
 {
-  "name": "hungneox/ramen-elastic-utils",
+  "name": "hungneox/ramen-elastic-query",
   "description": "Lumen/Laravel package for interacting with elasticsearch",
   "type": "library",
   "keywords": ["lumen-package", "laravel-package", "elasticsearch", "utility", "command"],

@@ -87,7 +87,7 @@ class Query
     public function setCollection($collection)
     {
         $this->collection = $collection;
-        
+
         return $this;
     }
 
