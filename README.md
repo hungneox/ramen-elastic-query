@@ -63,3 +63,7 @@ $result = $builder
 ```php
 ES::use('content')->from('article')->delete($id);
 ```
+
+## License
+
+See [LICENSE](LICENSE).
