@@ -7,6 +7,9 @@ use Neox\Ramen\Elastic\Query\WhereClause;
 use Nord\Lumen\Elasticsearch\Contracts\ElasticsearchServiceContract;
 use Nord\Lumen\Elasticsearch\Search\Query\Compound\BoolQuery;
 use Nord\Lumen\Elasticsearch\Search\Query\QueryDSL;
+use Nord\Lumen\Elasticsearch\Search\Search;
+use Nord\Lumen\Elasticsearch\Search\Sort\FieldSort;
+use Nord\Lumen\Elasticsearch\Search\Sort\ScoreSort;
 
 /**
  * Class ElasticQueryService
@@ -123,10 +126,25 @@ class ElasticQueryService
 
         $this->createClauses($esQuery, $query->getShouldClauses(), 'should');
 
+        /* @var Search $search */
         $search = $this->createSearch($query)->setQuery($esQuery);
+
+        if (!empty($query->getOrder())) {
+            $search->setSort($this->createOrderBy($query->getOrder()));
+        }
 
         // Execute the search to retrieve the results
         return $this->client->execute($search);
+    }
+
+    /**
+     * @param array $order
+     */
+    protected function createOrderBy(array $order)
+    {
+        return  $this->client
+                    ->createSort()
+                    ->addSort((new FieldSort())->setField($order['column'])->setOrder($order['order']));
     }
 
     /**

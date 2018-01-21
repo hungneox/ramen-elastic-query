@@ -49,10 +49,13 @@ $result = $builder->select('id', 'description')
 ### Fulltext match
 
 ```php
-$result = $builder->from('person') // select * by default
-			->where('name', 'like', 'smith')
-			->orderBy('age', 'desc')
-			->get();
+$result = $builder
+            ->use('content')
+            ->select('id', 'title', 'description', 'featured')
+            ->from('article')
+            ->where('title', 'like', 'Auringonkukan')
+            ->orderBy('featured', 'desc')
+            ->get();
 ```
 
 ### Deletion
